@@ -8,7 +8,7 @@
 // ==========================================
 const BIO_DATA = {
     name: "Arun",
-    title: "Software Engineer",
+    title: "Security Engineer",
     location: "Earth",
     email: "hello@example.com",
     website: "https://example.com",
@@ -16,54 +16,54 @@ const BIO_DATA = {
     linkedin: "https://linkedin.com/in/arun",
     twitter: "https://twitter.com/arun",
 
-    about: `Passionate software engineer with a love for building elegant solutions 
-to complex problems. I enjoy working on distributed systems, developer tools, 
-and anything that makes developers' lives easier.
+    about: `Security engineer passionate about breaking things to make them stronger. 
+I specialize in application security, penetration testing, and building secure systems.
 
-When I'm not coding, you'll find me exploring new technologies, contributing 
-to open source, or diving deep into system architecture.`,
+My mission is to stay one step ahead of attackers by understanding their mindset 
+and techniques. When I'm not hunting vulnerabilities, you'll find me researching 
+new attack vectors, contributing to security tools, or participating in CTF competitions.`,
 
     skills: {
-        languages: ["Python", "JavaScript", "TypeScript", "Go", "Rust", "SQL"],
-        frameworks: ["React", "Node.js", "FastAPI", "Django", "Next.js"],
-        tools: ["Docker", "Kubernetes", "AWS", "GCP", "Terraform", "Git"],
-        databases: ["PostgreSQL", "Redis", "MongoDB", "DynamoDB"],
-        other: ["System Design", "CI/CD", "Linux", "Microservices"]
+        offensive: ["Penetration Testing", "Web App Security", "API Security", "Network Security", "Red Teaming"],
+        defensive: ["SIEM", "Threat Modeling", "Incident Response", "Security Auditing", "Vulnerability Management"],
+        tools: ["Burp Suite", "Nmap", "Metasploit", "Wireshark", "OWASP ZAP", "Nuclei", "Nessus"],
+        languages: ["Python", "Bash", "Go", "JavaScript", "SQL"],
+        cloud: ["AWS Security", "Azure Security", "GCP Security", "Container Security", "Kubernetes Security"]
     },
 
     projects: [
         {
-            name: "project-alpha",
-            description: "A high-performance distributed cache system",
-            tech: ["Go", "Redis", "gRPC"],
-            url: "https://github.com/arunstar/project-alpha"
+            name: "vuln-scanner",
+            description: "Automated vulnerability scanner for web applications",
+            tech: ["Python", "AsyncIO", "Security"],
+            url: "https://github.com/arunstar/vuln-scanner"
         },
         {
-            name: "dev-toolkit",
-            description: "CLI tools to boost developer productivity",
-            tech: ["Rust", "CLI"],
-            url: "https://github.com/arunstar/dev-toolkit"
+            name: "security-toolkit",
+            description: "Collection of security automation scripts and tools",
+            tech: ["Python", "Bash", "Go"],
+            url: "https://github.com/arunstar/security-toolkit"
         },
         {
-            name: "cloud-monitor",
-            description: "Real-time infrastructure monitoring dashboard",
-            tech: ["React", "TypeScript", "WebSocket"],
-            url: "https://github.com/arunstar/cloud-monitor"
+            name: "threat-intel-dashboard",
+            description: "Real-time threat intelligence aggregation platform",
+            tech: ["React", "Python", "Elasticsearch"],
+            url: "https://github.com/arunstar/threat-intel-dashboard"
         }
     ],
 
     experience: [
         {
-            role: "Senior Software Engineer",
-            company: "TechCorp",
+            role: "Security Engineer",
+            company: "SecureCorp",
             period: "2022 - Present",
-            description: "Building scalable backend systems"
+            description: "Application security, pentesting, and security architecture"
         },
         {
-            role: "Software Engineer",
-            company: "StartupXYZ",
+            role: "Security Analyst",
+            company: "CyberDefense Inc",
             period: "2020 - 2022",
-            description: "Full-stack development"
+            description: "Threat detection, incident response, and vulnerability assessments"
         }
     ]
 };
