@@ -1,0 +1,603 @@
+/* ===========================================
+   CSS Variables & Design Tokens
+   =========================================== */
+:root {
+    /* Terminal Colors - Dracula-inspired theme */
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b22;
+    --bg-terminal: #0a0e14;
+    --border-color: #30363d;
+    
+    /* Text Colors */
+    --text-primary: #c9d1d9;
+    --text-muted: #8b949e;
+    --text-bright: #f0f6fc;
+    
+    /* Accent Colors */
+    --accent-green: #7ee787;
+    --accent-cyan: #79c0ff;
+    --accent-purple: #d2a8ff;
+    --accent-orange: #ffa657;
+    --accent-pink: #ff7b72;
+    --accent-yellow: #ffd700;
+    
+    /* Terminal Specific */
+    --prompt-color: #7ee787;
+    --command-color: #f0f6fc;
+    --output-color: #c9d1d9;
+    
+    /* Glow Effects */
+    --glow-green: 0 0 10px rgba(126, 231, 135, 0.5);
+    --glow-cyan: 0 0 10px rgba(121, 192, 255, 0.5);
+    
+    /* Sizing */
+    --terminal-max-width: 900px;
+    --border-radius: 12px;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+}
+
+/* ===========================================
+   Reset & Base Styles
+   =========================================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-mono);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Animated gradient background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(126, 231, 135, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(121, 192, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(210, 168, 255, 0.05) 0%, transparent 40%);
+    z-index: -1;
+    animation: gradientPulse 8s ease-in-out infinite alternate;
+}
+
+@keyframes gradientPulse {
+    0% { opacity: 0.6; transform: scale(1); }
+    100% { opacity: 1; transform: scale(1.1); }
+}
+
+/* CRT Scanlines Effect */
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.1) 0px,
+        rgba(0, 0, 0, 0.1) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    z-index: 1000;
+    opacity: 0.3;
+}
+
+/* ===========================================
+   Terminal Container
+   =========================================== */
+.terminal-container {
+    width: 100%;
+    max-width: var(--terminal-max-width);
+    background: var(--bg-terminal);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--border-color);
+    box-shadow: 
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(126, 231, 135, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+    animation: terminalBoot 0.8s ease-out;
+    position: relative;
+}
+
+@keyframes terminalBoot {
+    0% {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Terminal Header (Title Bar) */
+.terminal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.terminal-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.terminal-buttons span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-close {
+    background: #ff5f56;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-minimize {
+    background: #ffbd2e;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-maximize {
+    background: #27ca3f;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.terminal-buttons span:hover {
+    filter: brightness(1.2);
+    transform: scale(1.1);
+}
+
+.terminal-title {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.terminal-buttons-placeholder {
+    width: 52px;
+}
+
+/* Terminal Body */
+.terminal-body {
+    padding: 1.5rem;
+    min-height: 400px;
+    max-height: 70vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) transparent;
+}
+
+.terminal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.terminal-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.terminal-body::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+.terminal-body::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* ===========================================
+   Terminal Output Styles
+   =========================================== */
+.output {
+    line-height: 1.6;
+}
+
+.output-line {
+    margin-bottom: 0.5rem;
+    animation: lineAppear 0.3s ease-out;
+}
+
+@keyframes lineAppear {
+    0% {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.output-line .prompt {
+    color: var(--prompt-color);
+    margin-right: 0.5rem;
+}
+
+.output-line .command {
+    color: var(--command-color);
+}
+
+.output-line .result {
+    color: var(--output-color);
+    display: block;
+    padding-left: 0;
+    margin-top: 0.25rem;
+    white-space: pre-wrap;
+}
+
+/* Syntax Highlighting Classes */
+.highlight-green { color: var(--accent-green); }
+.highlight-cyan { color: var(--accent-cyan); }
+.highlight-purple { color: var(--accent-purple); }
+.highlight-orange { color: var(--accent-orange); }
+.highlight-pink { color: var(--accent-pink); }
+.highlight-yellow { color: var(--accent-yellow); }
+.highlight-muted { color: var(--text-muted); }
+.highlight-bright { color: var(--text-bright); font-weight: 600; }
+
+/* ASCII Art styling */
+.ascii-art {
+    color: var(--accent-cyan);
+    font-size: 0.75rem;
+    line-height: 1.2;
+    text-shadow: var(--glow-cyan);
+}
+
+/* Links in terminal */
+.terminal-link {
+    color: var(--accent-cyan);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--accent-cyan);
+    transition: all 0.2s ease;
+}
+
+.terminal-link:hover {
+    color: var(--accent-green);
+    border-color: var(--accent-green);
+    text-shadow: var(--glow-green);
+}
+
+/* Progress bar animation */
+.progress-bar {
+    display: inline-block;
+    width: 200px;
+    height: 10px;
+    background: var(--border-color);
+    border-radius: 5px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan));
+    border-radius: 5px;
+    animation: progressFill 1s ease-out forwards;
+}
+
+@keyframes progressFill {
+    0% { width: 0; }
+    100% { width: 100%; }
+}
+
+/* ===========================================
+   Input Line Styles
+   =========================================== */
+.input-line {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.prompt {
+    color: var(--prompt-color);
+    margin-right: 0.5rem;
+    white-space: nowrap;
+    text-shadow: var(--glow-green);
+}
+
+#command-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--command-color);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    caret-color: var(--accent-green);
+}
+
+#command-input::selection {
+    background: rgba(126, 231, 135, 0.3);
+}
+
+.cursor {
+    display: inline-block;
+    width: 10px;
+    height: 1.2em;
+    background: var(--accent-green);
+    animation: blink 1s step-end infinite;
+    margin-left: 2px;
+    opacity: 0;
+}
+
+#command-input:focus + .cursor {
+    opacity: 0;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+/* ===========================================
+   Help Hint
+   =========================================== */
+.help-hint {
+    position: fixed;
+    bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(22, 27, 34, 0.9);
+    border: 1px solid var(--border-color);
+    border-radius: 50px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    animation: hintAppear 1s ease-out 1.5s both;
+    backdrop-filter: blur(10px);
+}
+
+@keyframes hintAppear {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hint-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: var(--border-color);
+    border-radius: 50%;
+    color: var(--accent-green);
+    font-weight: 600;
+}
+
+.hint-text code {
+    color: var(--accent-green);
+    background: rgba(126, 231, 135, 0.1);
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+}
+
+/* ===========================================
+   Special Command Outputs
+   =========================================== */
+.neofetch-output {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+
+.neofetch-logo {
+    color: var(--accent-cyan);
+    font-size: 0.65rem;
+    line-height: 1.1;
+    text-shadow: var(--glow-cyan);
+}
+
+.neofetch-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.neofetch-info .label {
+    color: var(--accent-purple);
+    font-weight: 600;
+}
+
+.neofetch-info .value {
+    color: var(--text-primary);
+}
+
+.neofetch-separator {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border-color), transparent);
+    margin: 0.5rem 0;
+}
+
+.color-blocks {
+    display: flex;
+    gap: 4px;
+    margin-top: 0.5rem;
+}
+
+.color-block {
+    width: 24px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+/* Skills/Tools list */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.skill-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0;
+}
+
+.skill-icon {
+    color: var(--accent-orange);
+}
+
+/* Project cards */
+.project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.project-item {
+    padding: 0.75rem;
+    background: rgba(48, 54, 61, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.project-item:hover {
+    border-color: var(--accent-cyan);
+    background: rgba(48, 54, 61, 0.5);
+}
+
+.project-name {
+    color: var(--accent-green);
+    font-weight: 600;
+}
+
+.project-desc {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+.project-tech {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.tech-tag {
+    font-size: 0.75rem;
+    padding: 0.15rem 0.5rem;
+    background: rgba(121, 192, 255, 0.1);
+    color: var(--accent-cyan);
+    border-radius: 4px;
+}
+
+/* ===========================================
+   Responsive Design
+   =========================================== */
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+    
+    .terminal-body {
+        padding: 1rem;
+        min-height: 300px;
+        font-size: 0.9rem;
+    }
+    
+    .neofetch-output {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .neofetch-logo {
+        font-size: 0.5rem;
+        text-align: center;
+    }
+    
+    .help-hint {
+        bottom: 1rem;
+        font-size: 0.75rem;
+        padding: 0.5rem 1rem;
+    }
+    
+    .ascii-art {
+        font-size: 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .terminal-title {
+        font-size: 0.75rem;
+    }
+    
+    .terminal-body {
+        font-size: 0.8rem;
+    }
+    
+    .neofetch-logo {
+        display: none;
+    }
+}
+
+/* ===========================================
+   Accessibility
+   =========================================== */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .scanlines {
+        display: none;
+    }
+}
+
+/* Focus styles for keyboard navigation */
+#command-input:focus-visible {
+    outline: 2px solid var(--accent-green);
+    outline-offset: 2px;
+}
+
+.terminal-link:focus-visible {
+    outline: 2px solid var(--accent-cyan);
+    outline-offset: 2px;
+}

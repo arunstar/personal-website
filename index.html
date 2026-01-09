@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Arun's Personal Website - Linux Terminal Style Bio">
+    <meta name="keywords" content="developer, portfolio, terminal, linux, bio">
+    <meta name="author" content="Arun">
+    <title>arun@portfolio:~$ whoami</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <span class="btn-close"></span>
+                <span class="btn-minimize"></span>
+                <span class="btn-maximize"></span>
+            </div>
+            <div class="terminal-title">arun@portfolio:~</div>
+            <div class="terminal-buttons-placeholder"></div>
+        </div>
+        <div class="terminal-body" id="terminal">
+            <div class="output" id="output"></div>
+            <div class="input-line">
+                <span class="prompt">arun@portfolio:~$</span>
+                <input type="text" id="command-input" autofocus autocomplete="off" spellcheck="false">
+                <span class="cursor"></span>
+            </div>
+        </div>
+    </div>
+    <div class="help-hint">
+        <span class="hint-icon">?</span>
+        <span class="hint-text">Type <code>help</code> to see available commands</span>
+    </div>
+    <script src="terminal.js"></script>
+</body>
+</html>

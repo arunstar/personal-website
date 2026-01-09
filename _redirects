@@ -1,0 +1,12 @@
+# Cloudflare Pages Redirects Configuration
+# Format: /source /destination [status]
+
+# Example redirects (uncomment and modify as needed):
+# /blog/* /posts/:splat 301
+# /old-page /new-page 301
+
+# Handle trailing slashes
+# /about/ /about 301
+
+# Catch-all for SPA routing (uncomment if needed):
+# /* /index.html 200
