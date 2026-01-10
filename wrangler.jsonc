@@ -1,7 +1,9 @@
 {
   "name": "calm-king-acf9",
   "compatibility_date": "2026-01-09",
+  "main": "src/index.js",
   "assets": {
-    "directory": "./www"
+    "directory": "./www",
+    "binding": "ASSETS"
   }
 }
